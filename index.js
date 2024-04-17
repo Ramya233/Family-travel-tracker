@@ -79,6 +79,11 @@ app.post("/add", async (req, res) => {
       [input.toLowerCase()]
     );
 
+    if (result.rows.length === 0) {
+      console.log(`Country not found: ${input}`);
+      return res.redirect("/");
+    }
+
     const data = result.rows[0];
     const countryCode = data.country_code;
     try {
@@ -89,9 +94,11 @@ app.post("/add", async (req, res) => {
       res.redirect("/");
     } catch (err) {
       console.log(err);
+      res.redirect("/");
     }
   } catch (err) {
     console.log(err);
+    res.redirect("/");
   }
 });
 app.post("/user", async (req, res) => {
